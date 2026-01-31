@@ -1,6 +1,6 @@
 <?= view('layout/header') ?>
 <?= view('layout/sidebar') ?>
-<div id="customers" class="view-section">
+<div class="container-fluid p-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="fw-bold mb-0">Customer Directory</h3>
         <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#customerModal">
@@ -115,10 +115,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="save-customer-btn">Save changes</button>
             </div>
         </div>
     </div>
 </div>
-
 <?= view('layout/footer') ?>
