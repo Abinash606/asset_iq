@@ -1,0 +1,38 @@
+/* Dashboard specific styles */
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+/* Stat cards */
+.stat-card .fs-1 {
+    opacity: 0.25;
+}
+
+/* Progress bars */
+.progress {
+    background-color: #e2e8f0;
+}
+
+.progress-bar {
+    transition: width 0.6s ease;
+}
+
+/* Live service feed */
+.table thead {
+    background-color: #f8fafc;
+}
+
+.badge {
+    font-size: 0.75rem;
+    padding: 0.35em 0.65em;
+}
+
+/* Summary cards */
+.stat-card .small {
+    font-size: 0.875rem;
+}
+
+.stat-card .fw-bold {
+    font-weight: 600;
+}

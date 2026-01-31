@@ -1,0 +1,53 @@
+/* Modal styles */
+
+.modal-header {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-footer {
+    border-top: 1px solid #e2e8f0;
+}
+
+.modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+/* Inspection workflow steps */
+.inspection-step,
+.site-inspection-step {
+    min-height: 300px;
+}
+
+/* Credential sets */
+.credential-set {
+    padding: 1rem;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+}
+
+/* List group items in modals */
+.list-group-item {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.list-group-item:hover {
+    background-color: #f1f5f9;
+}
+
+/* Form labels */
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Button groups in modals */
+.modal-body .btn-group {
+    width: 100%;
+}
+
+.modal-body .btn-group .btn {
+    flex: 1;
+}

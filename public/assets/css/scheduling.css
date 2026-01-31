@@ -1,0 +1,53 @@
+/* Visuals for Gantt/Schedule */
+.gantt-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.gantt-label {
+    width: 140px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.gantt-timeline {
+    flex-grow: 1;
+    height: 30px;
+    background: #f1f5f9;
+    border-radius: 6px;
+    position: relative;
+}
+
+.gantt-bar {
+    position: absolute;
+    height: 100%;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Schedule view containers */
+.schedule-view {
+    display: none;
+}
+
+.schedule-view.active {
+    display: block;
+}
+
+.timeline-view {
+    display: none;
+}
+
+.timeline-view.active {
+    display: block;
+}

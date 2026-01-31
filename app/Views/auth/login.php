@@ -39,7 +39,7 @@
                         <div class="input-icon">
                             <i class="fa-solid fa-lock"></i>
                         </div>
-                        <input type="password" id="password" name="password" class="form-control-custom"
+                        <input type="password" id="password_hash" name="password" class="form-control-custom"
                             placeholder="Enter your password" required autocomplete="current-password">
                         <button type="button" class="eye-button" id="togglePassword">
                             <i id="eyeIcon" class="fa-solid fa-eye"></i>

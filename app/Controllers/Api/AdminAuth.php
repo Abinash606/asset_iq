@@ -3,13 +3,20 @@
 namespace App\Controllers\Api;
 
 use App\Controllers\BaseController;
-use App\Models\AdminModel;
+use App\Models\UserModel;
 
 class AdminAuth extends BaseController
 {
+    protected $userModel;
+
+    public function __construct()
+    {
+        $this->userModel = new UserModel();
+        helper('jwt');
+    }
+
     public function index()
     {
-        helper('jwt');
         $token = $this->request->getCookie('access_token');
 
         if ($token) {
@@ -26,26 +33,21 @@ class AdminAuth extends BaseController
 
     public function login()
     {
-        helper('jwt');
+        $data = $this->request->getJSON(true); // Read JSON body
 
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'email'    => 'required|valid_email',
-            'password' => 'required|min_length[6]'
-        ]);
+        $email    = $data['email'] ?? null;
+        $password = $data['password'] ?? null;
 
-        if (!$validation->withRequest($this->request)->run()) {
+        if (!$email || !$password) {
             return $this->response->setJSON([
                 'status'  => false,
-                'message' => 'Validation failed',
-                'errors'  => $validation->getErrors()
+                'message' => 'Email and password are required'
             ])->setStatusCode(400);
         }
 
-        $adminModel = new AdminModel();
-        $admin = $adminModel->where('email', $this->request->getVar('email'))->first();
+        $admin = $this->userModel->getByEmail($email);
 
-        if (!$admin || !password_verify($this->request->getVar('password'), $admin['password'])) {
+        if (!$admin || !$this->userModel->verifyPassword($email, $password)) {
             return $this->response->setJSON([
                 'status'  => false,
                 'message' => 'Invalid email or password'
@@ -67,17 +69,16 @@ class AdminAuth extends BaseController
             'access_token'  => $accessToken,
             'refresh_token' => $refreshToken,
             'user' => [
-                'id'    => $admin['id'],
-                'name'  => $admin['name'],
-                'email' => $admin['email']
+                'id'        => $admin['id'],
+                'full_name' => $admin['full_name'],
+                'email'     => $admin['email'],
+                'role_id'   => $admin['role_id']
             ]
         ]);
     }
 
     public function refresh()
     {
-        helper('jwt');
-
         $refreshToken = $this->request->getCookie('refresh_token');
 
         if (!$refreshToken) {
