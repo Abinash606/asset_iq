@@ -9,6 +9,29 @@ $(document).ready(function () {
         processing: true,
         responsive: true,
         pageLength: 10,
+        dom: 'Bfrtip',
+        buttons: [
+            {
+                extend: 'copy',
+                text: 'Copy',
+                className: 'btn btn-sm btn-outline-secondary'
+            },
+            {
+                extend: 'excel',
+                text: 'Excel',
+                className: 'btn btn-sm btn-outline-secondary'
+            },
+            {
+                extend: 'csv',
+                text: 'CSV',
+                className: 'btn btn-sm btn-outline-secondary'
+            },
+            {
+                extend: 'pdf',
+                text: 'PDF',
+                className: 'btn btn-sm btn-outline-secondary'
+            }
+        ],
         ajax: {
             url: '/api/admin/customers/list',
             type: 'GET',
@@ -20,36 +43,42 @@ $(document).ready(function () {
             }
         },
         columns: [
-            { data: 'name', title: 'Customer Name' },
-            { data: 'address', title: 'Address' },
-            { data: 'city', title: 'City' },
-            { data: 'state', title: 'State' },
-            { data: 'zip', title: 'Zip' },
-            { data: 'contact', title: 'Contact Name' },
-            { data: 'email', title: 'Email' },
-            { data: 'phone', title: 'Phone' },
-            { data: 'website', title: 'Website' },
+            { data: 'name', title: 'Customer Name', defaultContent: '' },
+            { data: 'address', title: 'Address', defaultContent: '' },
+            { data: 'city', title: 'Billing City', defaultContent: '' },
+            { data: 'state', title: 'State', defaultContent: '' },
+            { data: 'zip', title: 'Zip', defaultContent: '' },
+            { data: 'contact', title: 'Contact Name', defaultContent: '' },
+            { data: 'email', title: 'Email', defaultContent: '' },
+            { data: 'phone', title: 'Phone', defaultContent: '' },
+            { data: 'fax', title: 'Fax', defaultContent: '' },
+            { data: 'website', title: 'Website', defaultContent: '' },
             {
                 data: 'id',
                 title: 'Actions',
                 orderable: false,
                 searchable: false,
-                render: function (id) {
+                render: function (id, type, row) {
                     return `
-                        <button class="btn btn-sm btn-outline-secondary btn-edit" data-id="${id}">
-                            <i class="fa-solid fa-pen"></i>
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger btn-delete" data-id="${id}">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-outline-primary btn-edit" data-id="${id}" title="Edit">
+                                Edit
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger btn-delete" data-id="${id}" title="Delete">
+                                Delete
+                            </button>
+                            <button class="btn btn-sm btn-outline-info btn-add-sites" data-id="${id}" title="Add Sites">
+                                Add Sites
+                            </button>
+                        </div>
                     `;
                 }
             }
         ],
         language: {
-            search: "Search customers:",
-            lengthMenu: "Show _MENU_ customers",
-            info: "Showing _START_ to _END_ of _TOTAL_ customers",
+            search: "Search:",
+            lengthMenu: "Show _MENU_ entries",
+            info: "Showing _START_ to _END_ of _TOTAL_ entries",
             zeroRecords: "No customers found"
         }
     });
@@ -131,10 +160,10 @@ $(document).ready(function () {
                 const c = res.data;
 
                 $('#customer-name').val(c.name);
-                $('#customer-address').val(c.billing_address);
-                $('#customer-city').val(c.billing_city);
-                $('#customer-state').val(c.billing_state);
-                $('#customer-zip').val(c.billing_zip);
+                $('#customer-address').val(c.billing_address || c.address);
+                $('#customer-city').val(c.billing_city || c.city);
+                $('#customer-state').val(c.billing_state || c.state);
+                $('#customer-zip').val(c.billing_zip || c.zip);
                 $('#customer-contact').val(c.contact_name);
                 $('#customer-email').val(c.email);
                 $('#customer-phone').val(c.phone);
@@ -176,6 +205,15 @@ $(document).ready(function () {
     });
 
     /* ================================
+       ADD SITES BUTTON
+    ================================= */
+    $('#customer-datatable').on('click', '.btn-add-sites', function () {
+        const id = $(this).data('id');
+        // TODO: Implement Add Sites functionality
+        showToast('Add Sites functionality - Coming Soon', 'info');
+    });
+
+    /* ================================
        UTILITIES
     ================================= */
     function clearCustomerForm() {
@@ -183,9 +221,12 @@ $(document).ready(function () {
     }
 
     function showToast(message, type) {
+        const bgClass = type === 'success' ? 'bg-success' :
+            type === 'error' ? 'bg-danger' :
+                'bg-info';
         const toast = `
             <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index:9999">
-                <div class="toast text-white bg-${type === 'success' ? 'success' : 'danger'} show">
+                <div class="toast text-white ${bgClass} show">
                     <div class="d-flex">
                         <div class="toast-body">${message}</div>
                         <button class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>

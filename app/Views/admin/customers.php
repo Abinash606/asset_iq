@@ -18,7 +18,7 @@
     </div>
 
     <div class="glass-card">
-        <table id="customer-datatable" class="display" style="width:100%">
+        <table id="customer-datatable" class="display table table-striped" style="width:100%">
             <thead>
                 <tr>
                     <th>Customer Name</th>
