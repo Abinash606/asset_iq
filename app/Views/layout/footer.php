@@ -33,6 +33,7 @@
 <!-- Custom JavaScript -->
 <script src="<?= base_url('assets/js/admin.js') ?>"></script>
 <script src="<?= base_url('assets/js/customer.js') ?>"> </script>
+<script src="<?= base_url('assets/js/sites.js') ?>"> </script>
 </body>
 
 </html>

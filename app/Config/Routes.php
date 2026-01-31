@@ -20,5 +20,8 @@ $routes->group('api', function ($routes) {
         $routes->post('customers', 'Api\CustomerController::store');         // Create
         $routes->put('customers/(:num)', 'Api\CustomerController::update/$1'); // Update
         $routes->delete('customers/(:num)', 'Api\CustomerController::delete/$1'); // Delete
+
+        // Site Routes
+        $routes->get('sites', 'Api\SiteController::index');          // View
     });
 });
