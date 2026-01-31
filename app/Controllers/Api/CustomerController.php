@@ -29,7 +29,7 @@ class CustomerController extends BaseController
         $customers = $this->customerModel->findAll();
 
         return $this->response->setJSON([
-            'status' => 'success',
+            'success' => true, 
             'data' => array_map(function ($c) {
                 return [
                     'id' => $c['id'],
@@ -58,18 +58,18 @@ class CustomerController extends BaseController
 
             if (!$customer) {
                 return $this->response->setJSON([
-                    'status' => 'error',
+                    'success' => false,  
                     'message' => 'Customer not found'
                 ])->setStatusCode(ResponseInterface::HTTP_NOT_FOUND);
             }
 
             return $this->response->setJSON([
-                'status' => 'success',
+                'success' => true,  
                 'data' => $customer
             ]);
         } catch (\Exception $e) {
             return $this->response->setJSON([
-                'status' => 'error',
+                'success' => false, 
                 'message' => $e->getMessage()
             ])->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -99,13 +99,14 @@ class CustomerController extends BaseController
 
         if (!$this->customerModel->insert($data)) {
             return $this->response->setJSON([
-                'status' => 'error',
+                'success' => false,  
+                'message' => 'Failed to create customer',
                 'errors' => $this->customerModel->errors()
             ])->setStatusCode(400);
         }
 
         return $this->response->setJSON([
-            'status' => 'success',
+            'success' => true, 
             'message' => 'Customer created successfully'
         ]);
     }
@@ -120,20 +121,21 @@ class CustomerController extends BaseController
 
         if (!$this->customerModel->find($id)) {
             return $this->response->setJSON([
-                'status' => 'error',
+                'success' => false,  
                 'message' => 'Customer not found'
             ])->setStatusCode(404);
         }
 
         if (!$this->customerModel->update($id, $payload)) {
             return $this->response->setJSON([
-                'status' => 'error',
+                'success' => false, 
+                'message' => 'Failed to update customer',
                 'errors' => $this->customerModel->errors()
             ])->setStatusCode(400);
         }
 
         return $this->response->setJSON([
-            'status' => 'success',
+            'success' => true,  
             'message' => 'Customer updated successfully'
         ]);
     }
@@ -148,25 +150,25 @@ class CustomerController extends BaseController
             $customer = $this->customerModel->find($id);
             if (!$customer) {
                 return $this->response->setJSON([
-                    'status' => 'error',
+                    'success' => false,  
                     'message' => 'Customer not found'
                 ])->setStatusCode(ResponseInterface::HTTP_NOT_FOUND);
             }
 
             if ($this->customerModel->delete($id)) {
                 return $this->response->setJSON([
-                    'status' => 'success',
+                    'success' => true,  
                     'message' => 'Customer deleted successfully'
                 ]);
             } else {
                 return $this->response->setJSON([
-                    'status' => 'error',
+                    'success' => false, 
                     'message' => 'Failed to delete customer'
                 ])->setStatusCode(ResponseInterface::HTTP_BAD_REQUEST);
             }
         } catch (\Exception $e) {
             return $this->response->setJSON([
-                'status' => 'error',
+                'success' => false,  
                 'message' => $e->getMessage()
             ])->setStatusCode(ResponseInterface::HTTP_INTERNAL_SERVER_ERROR);
         }

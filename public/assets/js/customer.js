@@ -207,10 +207,64 @@ $(document).ready(function () {
     /* ================================
        ADD SITES BUTTON
     ================================= */
+    let currentCustomerId = null;
+
     $('#customer-datatable').on('click', '.btn-add-sites', function () {
-        const id = $(this).data('id');
-        // TODO: Implement Add Sites functionality
-        showToast('Add Sites functionality - Coming Soon', 'info');
+        currentCustomerId = $(this).data('id');
+        clearSiteForm();
+        $('#addSiteModal').modal('show');
+    });
+
+    /* ================================
+       SAVE SITE
+    ================================= */
+    $('#save-site-btn').on('click', function () {
+
+        if (!currentCustomerId) {
+            showToast('No customer selected', 'error');
+            return;
+        }
+
+        const payload = {
+            customer_id: currentCustomerId,
+            name: $('#add-site-name').val(),
+            address: $('#add-site-address').val(),
+            city: $('#add-site-city').val(),
+            state: $('#add-site-state').val(),
+            contact_name: $('#add-site-contact-name').val(),
+            phone: $('#add-site-phone').val(),
+            email: $('#add-site-email').val()
+        };
+
+        // Validation
+        if (!payload.name) {
+            showToast('Site name is required', 'error');
+            return;
+        }
+
+        if (!payload.address) {
+            showToast('Site address is required', 'error');
+            return;
+        }
+
+        $.ajax({
+            url: '/api/admin/sites',
+            type: 'POST',
+            contentType: 'application/json',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            },
+            data: JSON.stringify(payload),
+            success: function (response) {
+                $('#addSiteModal').modal('hide');
+                showToast('Site added successfully', 'success');
+                clearSiteForm();
+                currentCustomerId = null;
+            },
+            error: function (xhr) {
+                showToast(xhr.responseJSON?.message || 'Failed to add site', 'error');
+            }
+        });
     });
 
     /* ================================
@@ -218,6 +272,10 @@ $(document).ready(function () {
     ================================= */
     function clearCustomerForm() {
         $('#customerModal input').val('');
+    }
+
+    function clearSiteForm() {
+        $('#addSiteModal input').val('');
     }
 
     function showToast(message, type) {

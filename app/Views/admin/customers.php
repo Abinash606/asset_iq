@@ -120,4 +120,54 @@
         </div>
     </div>
 </div>
+
+<!-- Add Site Modal -->
+<div class="modal fade" id="addSiteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Site</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="add-site-name" class="form-label">Site Name</label>
+                        <input type="text" class="form-control" id="add-site-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="add-site-address" class="form-label">Site Address</label>
+                        <input type="text" class="form-control" id="add-site-address">
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="add-site-city" class="form-label">City</label>
+                            <input type="text" class="form-control" id="add-site-city" placeholder="e.g., New York">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="add-site-state" class="form-label">State</label>
+                            <input type="text" class="form-control" id="add-site-state" placeholder="e.g., NY">
+                        </div>
+                    </div>
+                    <div class="mb-3 mt-3">
+                        <label for="add-site-contact-name" class="form-label">Site Contact Name</label>
+                        <input type="text" class="form-control" id="add-site-contact-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="add-site-phone" class="form-label">Site Phone Number</label>
+                        <input type="text" class="form-control" id="add-site-phone">
+                    </div>
+                    <div class="mb-3">
+                        <label for="add-site-email" class="form-label">Site Email</label>
+                        <input type="email" class="form-control" id="add-site-email">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save-site-btn">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <?= view('layout/footer') ?>

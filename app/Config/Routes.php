@@ -22,6 +22,12 @@ $routes->group('api', function ($routes) {
         $routes->delete('customers/(:num)', 'Api\CustomerController::delete/$1'); // Delete
 
         // Site Routes
-        $routes->get('sites', 'Api\SiteController::index');          // View
+        $routes->get('sites', 'Api\SiteController::index');                     // View page
+        $routes->get('sites/list', 'Api\SiteController::list');                 // DataTable (with optional ?customer_id=123)
+        $routes->get('sites/customer/(:num)', 'Api\SiteController::getByCustomer/$1'); // Get sites by customer
+        $routes->get('sites/(:num)', 'Api\SiteController::get/$1');             // Get single
+        $routes->post('sites', 'Api\SiteController::store');                    // Create
+        $routes->put('sites/(:num)', 'Api\SiteController::update/$1');          // Update
+        $routes->delete('sites/(:num)', 'Api\SiteController::delete/$1');       // Delete
     });
 });
